@@ -5,8 +5,8 @@ include_once 'include/lib.php';
 // instance objek user
 $user = new User();
 
-// instance objek cust
-$cust = new customer();
+// instance objek nsb
+$nsb = new teknisi();
 
 $iduser = $_SESSION['id'];
 if (!$user->get_sesi()) {
@@ -19,7 +19,7 @@ if (!$user->get_sesi()) {
 <script>
     function checkForm(formZ) {
         if (formZ.nama.value == '') {
-            alert('Nama customer tidak boleh kosong.');
+            alert('Nama teknisi tidak boleh kosong.');
             formZ.nama.focus();
             return false;
         }
@@ -43,32 +43,37 @@ if (!$user->get_sesi()) {
             formZ.ktp.focus();
             return false;
         }
+        if (formZ.telp.value == '') {
+            alert('Telpon tidak boleh kosong.');
+            formZ.telp.focus();
+            return false;
+        }
     }
 </script>
 
-<b>Pelanggan</b>
+<b>Teknisi</b>
 <div class="subnav">
     <table border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td><img src="images/tabdata01.gif" /></td>
             <td class="tabsubnav">
-                <a href="?page=customer_mgr">DATA</a> &raquo; <b>TAMBAH Pelanggan</b>
+                <a href="?page=teknisi_mgr">DATA</a> &raquo; <b>TAMBAH Teknisi</b>
             </td>
             <td><img src="images/tabdata03.gif" /></td>
         </tr>
     </table>
 </div>		
 <table width="100%"  border="0" cellspacing="0" cellpadding="3">
-    <form name="customer" action="?page=customer_add" method="post" onsubmit="return checkForm(this)">
+    <form name="teknisi" action="?page=teknisi_add" method="post" onsubmit="return checkForm(this)">
         <tr>
-            <td width="15%"><div class="tabtxt">ID Pelanggan</div></td>
+            <td width="15%"><div class="tabtxt">ID teknisi</div></td>
             <td width="2%"><div class="tabtxt">:</div></td>
             <td width="83%">
-                <input name="id_cust" style="width:100px" type="textfield" class="tfield" value="<?php echo kdauto("customer", "CS"); ?>" readonly>
+                <input name="id" style="width:100px" type="textfield" class="tfield" value="<?php echo kdauto("teknisi", "TK"); ?>" readonly>
             </td>
         </tr>          
         <tr>
-            <td width="15%"><div class="tabtxt">Nama Pelanggan</div></td>
+            <td width="15%"><div class="tabtxt">Nama Teknisi</div></td>
             <td width="2%"><div class="tabtxt">:</div></td>
             <td width="83%">
                 <input name="nama" style="width:200px" type="textfield" class="tfield">
@@ -90,20 +95,20 @@ if (!$user->get_sesi()) {
                 <textarea name="alamat" style="width:200px" class="tfield" rows="4"></textarea>
             </td>
         </tr>
-        <tr>
-            <td><div class="tabtxt">Telepon</div></td>
-            <td><div class="tabtxt">:</div></td>
-            <td>
-                <input name="ktp" style="width:200px" type="textfield" class="tfield">
-            </td>
-        </tr>
-        <!--<tr>
-                <td><div class="tabtxt">Telepon</div></td>
+<!--<tr>
+                <td><div class="tabtxt">Nomor KTP</div></td>
                 <td><div class="tabtxt">:</div></td>
                 <td>
-                        <input name="telp" style="width:200px" type="textfield" class="tfield">
+                        <input name="ktp" style="width:200px" type="textfield" class="tfield">
                 </td>
         </tr>-->
+        <tr>
+            <td><div class="tabtxt">Telpon</div></td>
+            <td><div class="tabtxt">:</div></td>
+            <td>
+                <input name="telp" style="width:200px" type="textfield" class="tfield">
+            </td>
+        </tr>
         <tr>
             <td colspan="2">&nbsp;</td>
             <td>
@@ -115,9 +120,9 @@ if (!$user->get_sesi()) {
 </table>
 <?php
 if ($_POST['submit']) {
-    // tambah data customer via method
+    // tambah data teknisi via method
     //echo "$_POST['nama']";
-    $cust->tambahData($_POST['id_cust'], $_POST['nama'], $_POST['alamat'], $_POST['ktp'], $_POST['tmpt_lahir'], tgl_ind_to_eng($_POST['tgl_lahir']), $_POST['telp']);
-    echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=customer_mgr">';
+    $nsb->tambahData($_POST['id'], $_POST['nama'], $_POST['ktp'], $_POST['tmpt_lahir'], tgl_ind_to_eng($_POST['tgl_lahir']), $_POST['alamat'], $_POST['telp']);
+    echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=teknisi_mgr">';
 }
 ?>
