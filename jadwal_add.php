@@ -119,7 +119,7 @@ if (!$user->get_sesi()) {
             <td><div class="tabtxt">Keterangan</div></td>
             <td><div class="tabtxt">:</div></td>
             <td>
-                <textarea name="keterangan" cols="40" rows="4" required></textarea>
+                <textarea name="keterangan" cols="40" rows="4"></textarea>
             </td>
         </tr>
 

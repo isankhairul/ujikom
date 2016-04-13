@@ -6,7 +6,7 @@ if (!$user->get_sesi()) {
 }
 ?>
 <div class="subtitle" align="left">
-    <p> Selamat Datang di <br>
+    <p> Selamat Datang <?php echo ucfirst($username); ?>, <br>
         <br />
         <b>Sistem Informasi Pelayanan Perbaikan dan Pemasangan Baru Mesin Pendingin Ruangan Di CV. TRIDAYA MANUNGGAL TEKNIK<br>
             <br />

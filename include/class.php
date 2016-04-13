@@ -1,4 +1,5 @@
 <?php
+include_once 'lib.php';
 
 class Database {
 
@@ -19,18 +20,20 @@ class User {
     // proses login
     function cek_login($user, $password) {
         $password = md5($password);
-        $result = mysql_query("SELECT * FROM users WHERE user='$user' AND password='$password'");
+        $result = mysql_query("SELECT * FROM users WHERE username='$user' AND password='$password'");
         $user_data = mysql_fetch_array($result);
         $no_rows = mysql_num_rows($result);
         if ($no_rows == 1) {
             $_SESSION['login'] = TRUE;
             $_SESSION['id'] = $user_data['id'];
+            $_SESSION['username'] = $user_data['username'];
+            $_SESSION['hak_akses'] = $user_data['hak_akses'];
             return TRUE;
         } else {
             return FALSE;
         }
     }
-
+    
     // Ambil Sesi 
     function get_sesi() {
         return (isset($_SESSION['login']) ? $_SESSION['login'] : "");
@@ -40,6 +43,14 @@ class User {
     function user_logout() {
         $_SESSION['login'] = FALSE;
         session_destroy();
+    }
+    
+    function getListAccessPage(){
+        return [
+            "admin" => ["teknisi", "pelanggan", "barang", "jadwal", "transaksi"],
+            "manager" => ["teknisi", "pelanggan", "barang", "jadwal", "transaksi"],
+            "teknisi" => ["teknisi"]
+        ];
     }
 
 }
@@ -370,8 +381,9 @@ class jadwal {
             
     function tambahJadwal($id_pelanggan, $id_teknisi, $id_barang, $tipe_pelayanan, $status, $tanggal, $jam, $keterangan) {
         //$choice = mysql_real_escape_string($_REQUEST['mydropdown']);
-        $query = "INSERT INTO jadwal (id_pelanggan, id_teknisi, tipe_pelayanan, tanggal, id_barang, status, jam, keterangan)
-		          VALUES ('$id_pelanggan', '$id_teknisi', '$tipe_pelayanan', '$tanggal', '$id_barang', '$status', '$jam', '$keterangan')";
+        $id_jadwal = kdauto("jadwal", "JD");
+        $query = "INSERT INTO jadwal (id_jadwal, id_pelanggan, id_teknisi, tipe_pelayanan, tanggal, id_barang, status, jam, keterangan)
+		          VALUES ('$id_jadwal' ,'$id_pelanggan', '$id_teknisi', '$tipe_pelayanan', '$tanggal', '$id_barang', '$status', '$jam', '$keterangan')";
         $hasil = mysql_query($query);
     }
 
@@ -385,13 +397,19 @@ class jadwal {
             $data[] = $row;
         return $data;
     }
-
-    function ambilmerek($id_merek) {
-        $query = mysql_query("SELECT * FROM merek WHERE id_merek='$id_merek'");
-        $row = mysql_fetch_array($query);
-        echo $row['n_merek'];
+    
+    function tampilJadwalNotOk(){
+        $query = mysql_query("SELECT a.*, b.nama AS nama_pelanggan, c.nama AS nama_teknisi, d.nama_barang
+                                FROM jadwal a
+                                JOIN pelanggan b ON a.id_pelanggan=b.id_pelanggan
+                                JOIN teknisi c ON a.id_teknisi=c.id
+                                JOIN barang d ON a.id_barang=d.id_barang
+                                WHERE a.status <> 'ok';");
+        while ($row = mysql_fetch_array($query))
+            $data[] = $row;
+        return $data;
     }
-
+    
     function searchjadwal($keyword) {
         $query = mysql_query("SELECT a.*, b.nama AS nama_pelanggan, c.nama AS nama_teknisi, d.nama_barang
                                 FROM jadwal a
@@ -423,7 +441,60 @@ class jadwal {
         $query = mysql_query("DELETE FROM jadwal WHERE id_jadwal = '$id'");
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=jadwal_mgr">';
     }
+}
 
+class transaksi {
+            
+    function tambahTransaksi($id_jadwal, $status, $jum_pembayaran) {
+        //$choice = mysql_real_escape_string($_REQUEST['mydropdown']);
+        $id_transaksi = kdauto("transaksi", "TR");
+        $now = date('Y-m-d H:i:s');
+        $query = "INSERT INTO transaksi (id_transaksi, id_jadwal, jum_pembayaran, last_update)
+		          VALUES ('$id_transaksi', '$id_jadwal', '$jum_pembayaran', '$now')";
+        mysql_query($query);
+        $queryUpdateStatus = "UPDATE jadwal SET status = '$status' where id_jadwal = '$id_jadwal'";
+        mysql_query($queryUpdateStatus);
+    }
+
+    function tampilTransaksi() {
+        $query = mysql_query("SELECT a.*, b.status
+                                FROM transaksi a
+                                JOIN jadwal b ON a.`id_jadwal` = b.`id_jadwal`;");
+        while ($row = mysql_fetch_array($query))
+            $data[] = $row;
+        return $data;
+    }
+    
+    function searchTransaksi($keyword) {
+        $query = mysql_query("SELECT * from transaksi
+                                WHERE id_transaksi = '$keyword';");
+        while ($row = mysql_fetch_array($query))
+            $data[] = $row;
+        return $data;
+    }
+
+    function bacadata($id_transaksi) {
+        $query = mysql_query("SELECT a.*, b.status
+                                FROM transaksi a
+                                JOIN jadwal b ON a.`id_jadwal` = b.`id_jadwal`
+                                WHERE a.`id_transaksi` = '$id_transaksi'");
+        $data = mysql_fetch_array($query);
+        return $data;
+    }
+
+    function updateTransaksi($id_transaksi, $id_jadwal, $status, $jum_pembayaran) {
+        $now = date('Y-m-d H:i:s');
+        mysql_query("UPDATE transaksi SET"
+                . " id_jadwal = '$id_jadwal', jum_pembayaran = '$jum_pembayaran', last_update = '$now'"
+                . " WHERE id_transaksi='$id_transaksi'");
+        mysql_query("UPDATE jadwal SET status = '$status' where id_jadwal = '$id_jadwal'");
+        echo "Data Transaksi sudah di update";
+    }
+
+    function hapusTransaksi($id) {
+        $query = mysql_query("DELETE FROM transaksi WHERE id_transaksi = '$id'");
+        echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=transaksi_mgr">';
+    }
 }
 
 

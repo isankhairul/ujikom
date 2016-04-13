@@ -6,7 +6,7 @@ include_once 'include/lib.php';
 $user = new User();
 
 // instance objek cust
-$cust = new customer();
+$cust = new pelanggan();
 
 $iduser = $_SESSION['id'];
 if (!$user->get_sesi()) {
@@ -64,7 +64,7 @@ if (!$user->get_sesi()) {
             <td width="15%"><div class="tabtxt">ID Pelanggan</div></td>
             <td width="2%"><div class="tabtxt">:</div></td>
             <td width="83%">
-                <input name="id_cust" style="width:100px" type="textfield" class="tfield" value="<?php echo kdauto("customer", "CS"); ?>" readonly>
+                <input name="id_cust" style="width:100px" type="textfield" class="tfield" value="<?php echo kdauto("pelanggan", "PL"); ?>" readonly>
             </td>
         </tr>          
         <tr>

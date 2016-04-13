@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `jadwal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jadwal` (
-  `id_jadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `id_jadwal` varchar(6) NOT NULL,
   `id_pelanggan` varchar(5) DEFAULT NULL,
   `id_teknisi` varchar(5) DEFAULT NULL,
   `tipe_pelayanan` varchar(45) DEFAULT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `jadwal` (
   `jam` varchar(10) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_jadwal`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `jadwal` (
 
 LOCK TABLES `jadwal` WRITE;
 /*!40000 ALTER TABLE `jadwal` DISABLE KEYS */;
-INSERT INTO `jadwal` VALUES (1,'CS001','TK001','Service','2016-05-04','B02','proses','19:15',NULL),(3,'CS003','TK003','Service','2016-04-22','B01','proses','19:16','on going'),(7,'CS004','TK003','Service','2016-04-14','B03','belum_proses','19:25','Kulkas');
+INSERT INTO `jadwal` VALUES ('JD0001','CS003','TK001','Service','2016-04-14','B02','ok','22:18','test'),('JD0002','CS005','TK003','Service','2016-04-15','B04','ok','22:18','test');
 /*!40000 ALTER TABLE `jadwal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `pelanggan` (
 
 LOCK TABLES `pelanggan` WRITE;
 /*!40000 ALTER TABLE `pelanggan` DISABLE KEYS */;
-INSERT INTO `pelanggan` VALUES ('CS001','Muhammad Solahudin','Jl. Bandengan Utara Kav 70 jakarta Utara','0813000054664','','0000-00-00',''),('CS002','Jason Becker Al Ahmad','Jl. Gunung Sahari','55664439009090','Jakarta','1979-03-08','0812223060757'),('CS003','Ryan Pramana','jl. Raya Imam Bonjol Perum Aster','00092812211222','Palembang','1987-05-12',''),('CS004','Jimmy Page','Jl. K.H. hasyim Asyari','29001245889800','Tegal','1986-11-01',''),('CS005','James Hatfield','Jl. haji Juanda 43A','878722220021212','tegal','1987-02-03','081345678008'),('CS006','Dave Mustaine','jl. Ir Soekarno AA98','332321000044746','New York','1989-07-01','02189878762'),('CS007','Kasino hadiwibowo','Jl. KH Hasyim Asyari','3390111221123445','Gombong','1985-07-31','085742798012'),('CS008','David Elfiansyah','Jl. Kapten Tendean no 11','512300909090192','Jakarta','1989-10-06','081326760021'),('CS009','Bagus Pradino','Jl. Gunung Sahari no 9','5470007732332122','Serang','1990-11-23','08581234500');
+INSERT INTO `pelanggan` VALUES ('PL001','Muhammad Solahudin','Jl. Bandengan Utara Kav 70 jakarta Utara','0813000054664','','0000-00-00',''),('PL002','Jason Becker Al Ahmad','Jl. Gunung Sahari','55664439009090','Jakarta','1979-03-08','0812223060757'),('PL003','Ryan Pramana','jl. Raya Imam Bonjol Perum Aster','00092812211222','Palembang','1987-05-12',''),('PL004','Jimmy Page','Jl. K.H. hasyim Asyari','29001245889800','Tegal','1986-11-01',''),('PL005','James Hatfield','Jl. haji Juanda 43A','878722220021212','tegal','1987-02-03','081345678008'),('PL006','Dave Mustaine','jl. Ir Soekarno AA98','332321000044746','New York','1989-07-01','02189878762'),('PL007','Kasino hadiwibowo','Jl. KH Hasyim Asyari','3390111221123445','Gombong','1985-07-31','085742798012'),('PL008','David Elfiansyah','Jl. Kapten Tendean no 11','512300909090192','Jakarta','1989-10-06','081326760021'),('PL009','Bagus Pradino','Jl. Gunung Sahari no 9','5470007732332122','Serang','1990-11-23','08581234500');
 /*!40000 ALTER TABLE `pelanggan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +125,7 @@ CREATE TABLE `teknisi` (
 
 LOCK TABLES `teknisi` WRITE;
 /*!40000 ALTER TABLE `teknisi` DISABLE KEYS */;
-INSERT INTO `teknisi` VALUES ('TK001','Dodi Or Black','','','0000-00-00','Jl. Kramat Raya no 1','02189875221'),('TK002','faizal hamdur','','','0000-00-00','Jl. Kebagusan scdsacacsd','087783373340'),('TK003','Rianty Novemberini','1120092238212231','Medan','1988-04-02','jl. perintis Kemerdekaan','0217345678'),('TK004','test','','','0000-00-00','test','0212345');
+INSERT INTO `teknisi` VALUES ('TK001','Dodi Or Black','','','0000-00-00','Jl. Kramat Raya no 1','02189875221'),('TK002','faizal hamdur','','','0000-00-00','Jl. Kebagusan scdsacacsd','087783373340'),('TK003','Rianty Novemberini','1120092238212231','Medan','1988-04-02','jl. perintis Kemerdekaan','0217345678');
 /*!40000 ALTER TABLE `teknisi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,9 +137,9 @@ DROP TABLE IF EXISTS `transaksi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transaksi` (
-  `id_transaksi` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `id_jadwal` int(11) DEFAULT NULL,
-  `jum_pembayaran` double(15,2) DEFAULT NULL,
+  `id_transaksi` varchar(6) NOT NULL,
+  `id_jadwal` varchar(6) DEFAULT NULL,
+  `jum_pembayaran` double(15,0) DEFAULT NULL,
   `last_update` datetime DEFAULT '2016-04-04 00:00:00',
   PRIMARY KEY (`id_transaksi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -151,6 +151,7 @@ CREATE TABLE `transaksi` (
 
 LOCK TABLES `transaksi` WRITE;
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
+INSERT INTO `transaksi` VALUES ('TR0001','JD0001',50000,'2016-04-13 23:17:27'),('TR0002','JD0002',100000,'2016-04-13 23:17:55');
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,13 +164,13 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `username` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
+  `password` varchar(255) COLLATE latin1_general_ci NOT NULL,
   `email` varchar(255) COLLATE latin1_general_ci NOT NULL,
   `kelamin` varchar(8) COLLATE latin1_general_ci NOT NULL,
-  `user` varchar(25) COLLATE latin1_general_ci NOT NULL,
-  `password` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `hak_akses` varchar(25) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +179,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Septiadi Satyo Nugroho','adidoeldoly21@gmail.com','pria','admin','21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `users` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3','adidoeldoly21@gmail.com','pria','admin'),(2,'bejo','e10adc3949ba59abbe56e057f20f883e','bejo@gmail.com','pria','teknisi'),(3,'manager','e10adc3949ba59abbe56e057f20f883e','manager@gmail.com','pria','manager');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -191,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-13 19:47:05
+-- Dump completed on 2016-04-13 23:59:19

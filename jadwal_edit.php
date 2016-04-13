@@ -51,7 +51,15 @@ if (isset($_GET['aksi'])) {
     </table>
 </div>		
 <table width="100%"  border="0" cellspacing="0" cellpadding="3">
-    <form name="jadwal" method="post">      
+    <form name="jadwal" method="post">
+        <tr>
+            <td><div class="tabtxt">ID Jadwal</div></td>
+            <td><div class="tabtxt">:</div></td>
+            <td>
+                <input name="id_jadwal" style="width:200px" class="tfield" readonly="readonly"
+                       value="<?php echo $id; ?>">
+            </td>
+        </tr>
         <tr>
             <td width="15%"><div class="tabtxt">Pelanggan</div></td>
             <td width="2%"><div class="tabtxt">:</div></td>
@@ -137,7 +145,7 @@ if (isset($_GET['aksi'])) {
             <td><div class="tabtxt">Keterangan</div></td>
             <td><div class="tabtxt">:</div></td>
             <td>
-                <textarea name="keterangan" cols="40" rows="4" required><?php echo $jdw->bacadata($id)['keterangan']; ?></textarea>
+                <textarea name="keterangan" cols="40" rows="4"><?php echo $jdw->bacadata($id)['keterangan']; ?></textarea>
             </td>
         </tr>
         <tr>
