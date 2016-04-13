@@ -19,7 +19,7 @@ class User {
     // proses login
     function cek_login($user, $password) {
         $password = md5($password);
-        $result = mysql_query("SELECT * FROM admin WHERE user='$user' AND password='$password'");
+        $result = mysql_query("SELECT * FROM users WHERE user='$user' AND password='$password'");
         $user_data = mysql_fetch_array($result);
         $no_rows = mysql_num_rows($result);
         if ($no_rows == 1) {
@@ -44,38 +44,38 @@ class User {
 
 }
 
-class customer {
+class pelanggan {
 
     function tampilcust() {
-        $query = mysql_query("SELECT * FROM customer");
+        $query = mysql_query("SELECT * FROM pelanggan");
         while ($row = mysql_fetch_array($query))
             $data[] = $row;
         return $data;
     }
 
     function searchcust($keyword) {
-        $query = mysql_query("select * from customer where nama like '%$keyword%'");
+        $query = mysql_query("select * from pelanggan where nama like '%$keyword%'");
         while ($row = mysql_fetch_array($query))
             $data[] = $row;
         return $data;
     }
 
-    function tambahData($id_cust, $nama, $alamat, $ktp, $tmpt_lahir, $tgl, $tlp) {
-        $query = "INSERT INTO customer (id_cust, nama, alamat, ktp, tempat_lahir, tanggal_lahir, telepon)
-		          VALUES ('$id_cust', '$nama', '$alamat', '$ktp', '$tmpt_lahir', '$tgl', '$tlp')";
+    function tambahData($id_pelanggan, $nama, $alamat, $ktp, $tmpt_lahir, $tgl, $tlp) {
+        $query = "INSERT INTO pelanggan (id_pelanggan, nama, alamat, ktp, tempat_lahir, tanggal_lahir, telepon)
+		          VALUES ('$id_pelanggan', '$nama', '$alamat', '$ktp', '$tmpt_lahir', '$tgl', '$tlp')";
         $hasil = mysql_query($query);
     }
 
-    function hapuscust($id_cust) {
-        $query = mysql_query("DELETE FROM customer WHERE id_cust = '$id_cust'");
-        echo "Data Customer ID " . $id_cust . " sudah di hapus";
+    function hapuscust($id_pelanggan) {
+        $query = mysql_query("DELETE FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
+        echo "Data Customer ID " . $id_pelanggan . " sudah di hapus";
     }
 
-    function bacadata($field, $id_cust) {
-        $query = mysql_query("SELECT * FROM customer WHERE id_cust = '$id_cust'");
+    function bacadata($field, $id_pelanggan) {
+        $query = mysql_query("SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
         $data = mysql_fetch_array($query);
-        if ($field == 'id_cust')
-            return $data['id_cust'];
+        if ($field == 'id_pelanggan')
+            return $data['id_pelanggan'];
         else if ($field == 'nama')
             return $data['nama'];
         else if ($field == 'alamat')
@@ -90,13 +90,13 @@ class customer {
             return $data['telepon'];
     }
 
-    function updatecust($id_cust, $nama, $alamat, $ktp, $tmpt_lahir, $tgl, $telp) {
-        $query = "UPDATE customer SET nama = '$nama',
+    function updatecust($id_pelanggan, $nama, $alamat, $ktp, $tmpt_lahir, $tgl, $telp) {
+        $query = "UPDATE pelanggan SET nama = '$nama',
 		alamat = '$alamat', ktp = '$ktp', tempat_lahir = '$tmpt_lahir',
-		tanggal_lahir = ' $tgl', telepon = '$telp' WHERE id_cust = '$id_cust'";
+		tanggal_lahir = ' $tgl', telepon = '$telp' WHERE id_pelanggan = '$id_pelanggan'";
         $hasil = mysql_query($query);
-        //echo "id= ".$id_cust." nama= ".$nama." ktp= ".$ktp." tmpt_lhr = ".$tmpt_lahir." tgl= ".$tgl." alamat = ".$alamat." telp = ".$telp." itu data";	
-        echo "Data customer sudah di update";
+        //echo "id= ".$id_pelanggan." nama= ".$nama." ktp= ".$ktp." tmpt_lhr = ".$tmpt_lahir." tgl= ".$tgl." alamat = ".$alamat." telp = ".$telp." itu data";	
+        echo "Data pelanggan sudah di update";
     }
 
 }
@@ -165,7 +165,7 @@ class teknisi {
 class angsur {
 
     function searchtrans($keyword) {
-        $query = mysql_query("select * from transaksi inner join customer on transaksi.id_cust=customer.id_cust where nama like '%$keyword%'");
+        $query = mysql_query("select * from transaksi inner join pelanggan on transaksi.id_pelanggan=pelanggan.id_pelanggan where nama like '%$keyword%'");
         while ($row = mysql_fetch_array($query))
             $data[] = $row;
         return $data;
@@ -186,14 +186,14 @@ class angsur {
     }
 
     function combonmc() {
-        $query = mysql_query("SELECT id_cust, nama FROM customer");
+        $query = mysql_query("SELECT id_pelanggan, nama FROM pelanggan");
         while ($row = mysql_fetch_array($query))
             $data[] = $row;
         return $data;
     }
 
-    function ambilnama($id_cust) {
-        $query = mysql_query("SELECT * FROM customer WHERE id_cust='$id_cust'");
+    function ambilnama($id_pelanggan) {
+        $query = mysql_query("SELECT * FROM pelanggan WHERE id_pelanggan='$id_pelanggan'");
         $row = mysql_fetch_array($query);
         echo $row['nama'];
     }
@@ -203,10 +203,10 @@ class angsur {
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=detail_mgr">';
     }
 
-    function tambahData($id_trans, $id_cust, $barang, $dp, $tgl_trans) {
+    function tambahData($id_trans, $id_pelanggan, $barang, $dp, $tgl_trans) {
         //$choice = mysql_real_escape_string($_REQUEST['mydropdown']);
-        $query = "INSERT INTO transaksi (id_trans, id_cust, nama_barang, dp, tgl_trans)
-		          VALUES ('$id_trans', '$id_cust', '$barang', '$dp', '$tgl_trans')";
+        $query = "INSERT INTO transaksi (id_trans, id_pelanggan, nama_barang, dp, tgl_trans)
+		          VALUES ('$id_trans', '$id_pelanggan', '$barang', '$dp', '$tgl_trans')";
         $hasil = mysql_query($query);
     }
 
@@ -217,15 +217,15 @@ class angsur {
         return $data;
     }
 
-    function jatuhtempo($id_cust) {
-        $query = mysql_query("SELECT tgl_trans FROM TRANSAKSI WHERE id_cust='$id_cust'");
+    function jatuhtempo($id_pelanggan) {
+        $query = mysql_query("SELECT tgl_trans FROM TRANSAKSI WHERE id_pelanggan='$id_pelanggan'");
         $row = mysql_fetch_array($query);
         $tempo = substr($row['tgl_trans'], 8, 2);
         echo $tempo;
     }
 
     function bacatransaksi($field, $id_trans) {
-        $query = mysql_query("SELECT distinct * FROM transaksi INNER JOIN customer ON customer.id_cust = transaksi.id_cust INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang where transaksi.id_trans= '$id_trans'");
+        $query = mysql_query("SELECT distinct * FROM transaksi INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang where transaksi.id_trans= '$id_trans'");
         $data = mysql_fetch_array($query);
         $selisih = ($data['harga'] - $data['dp']);
         if ($field == 'id_barang')
@@ -247,7 +247,7 @@ class angsur {
     }
 
     function cariAngsuran($id_trans) {
-        $query = mysql_query("SELECT * FROM transaksi INNER JOIN customer ON customer.id_cust = transaksi.id_cust INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang = '$id_trans'");
+        $query = mysql_query("SELECT * FROM transaksi INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang = '$id_trans'");
     }
 
     function bayar($id_trans, $selisih, $tgl_bayar) {
@@ -334,7 +334,7 @@ class barang {
     }
 
     function bacatransaksi($field, $id_trans) {
-        $query = mysql_query("SELECT * FROM transaksi INNER JOIN customer ON customer.id_cust = transaksi.id_cust INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang = '$id'");
+        $query = mysql_query("SELECT * FROM transaksi INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan INNER JOIN barang ON barang.nama_barang = transaksi.nama_barang = '$id'");
         $data = mysql_fetch_array($query);
         if ($field == 'id_barang')
             return $data['id_barang'];
@@ -361,5 +361,70 @@ class barang {
     }
 
 }
+
+class jadwal {
+    
+    function getStatus(){
+        return ["belum_proses", "proses", "ok"];
+    }
+            
+    function tambahJadwal($id_pelanggan, $id_teknisi, $id_barang, $tipe_pelayanan, $status, $tanggal, $jam, $keterangan) {
+        //$choice = mysql_real_escape_string($_REQUEST['mydropdown']);
+        $query = "INSERT INTO jadwal (id_pelanggan, id_teknisi, tipe_pelayanan, tanggal, id_barang, status, jam, keterangan)
+		          VALUES ('$id_pelanggan', '$id_teknisi', '$tipe_pelayanan', '$tanggal', '$id_barang', '$status', '$jam', '$keterangan')";
+        $hasil = mysql_query($query);
+    }
+
+    function tampilJadwal() {
+        $query = mysql_query("SELECT a.*, b.nama AS nama_pelanggan, c.nama AS nama_teknisi, d.nama_barang
+                                FROM jadwal a
+                                JOIN pelanggan b ON a.id_pelanggan=b.id_pelanggan
+                                JOIN teknisi c ON a.id_teknisi=c.id
+                                JOIN barang d ON a.id_barang=d.id_barang;");
+        while ($row = mysql_fetch_array($query))
+            $data[] = $row;
+        return $data;
+    }
+
+    function ambilmerek($id_merek) {
+        $query = mysql_query("SELECT * FROM merek WHERE id_merek='$id_merek'");
+        $row = mysql_fetch_array($query);
+        echo $row['n_merek'];
+    }
+
+    function searchjadwal($keyword) {
+        $query = mysql_query("SELECT a.*, b.nama AS nama_pelanggan, c.nama AS nama_teknisi, d.nama_barang
+                                FROM jadwal a
+                                JOIN pelanggan b ON a.id_pelanggan=b.id_pelanggan
+                                JOIN teknisi c ON a.id_teknisi=c.id
+                                JOIN barang d ON a.id_barang=d.id_barang
+                                WHERE a.status like '%$keyword%';");
+        while ($row = mysql_fetch_array($query))
+            $data[] = $row;
+        return $data;
+    }
+
+    function bacadata($id_jadwal) {
+        $query = mysql_query("SELECT * FROM jadwal WHERE id_jadwal = '$id_jadwal'");
+        $data = mysql_fetch_array($query);
+        return $data;
+    }
+
+    function updateJadwal($id, $id_pelanggan, $id_teknisi, $id_barang, $tipe_pelayanan, $status, $tanggal, $jam, $keterangan) {
+        $query = mysql_query("UPDATE jadwal SET id_pelanggan = '$id_pelanggan', "
+                . "id_teknisi = '$id_teknisi', id_barang = '$id_barang', "
+                . "tipe_pelayanan = '$tipe_pelayanan', status = '$status', "
+                . "tanggal = '$tanggal', jam = '$jam', keterangan = '$keterangan'"
+                . " where id_jadwal='$id'");
+        echo "Data Jadwal sudah di update";
+    }
+
+    function hapusJadwal($id) {
+        $query = mysql_query("DELETE FROM jadwal WHERE id_jadwal = '$id'");
+        echo '<META HTTP-EQUIV="Refresh" Content="0; URL=?page=jadwal_mgr">';
+    }
+
+}
+
 
 ?>

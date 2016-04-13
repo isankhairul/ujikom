@@ -6,7 +6,7 @@ include_once 'include/lib.php';
 $user = new User();
 
 // instance objek cust
-$cust = new customer();
+$cust = new pelanggan();
 
 $iduser = $_SESSION['id'];
 if (!$user->get_sesi()) {
@@ -16,16 +16,16 @@ if (!$user->get_sesi()) {
 // proses hapus data
 if (isset($_GET['aksi'])) {
     if ($_GET['aksi'] == 'hapus') {
-        // baca ID dari parameter ID customer yang akan dihapus
-        $id = $_GET['id_cust'];
-        // proses hapus data customer berdasarkan ID via method
+        // baca ID dari parameter ID pelanggan yang akan dihapus
+        $id = $_GET['id_pelanggan'];
+        // proses hapus data pelanggan berdasarkan ID via method
         $cust->hapuscust($id);
     }
 
     // proses edit data
     else if ($_GET['aksi'] == 'edit') {
-        // baca ID customer yang akan diedit
-        $id = $_GET['id_cust'];
+        // baca ID pelanggan yang akan diedit
+        $id = $_GET['id_pelanggan'];
         ?>
         <link rel="stylesheet" href="kalender/calendar.css" type="text/css">
         <script type="text/javascript" src="kalender/calendar.js"></script>
@@ -33,7 +33,7 @@ if (isset($_GET['aksi'])) {
         <script>
             function checkForm(formZ) {
                 if (formZ.nama.value == '') {
-                    alert('Nama customer tidak boleh kosong.');
+                    alert('Nama pelanggan tidak boleh kosong.');
                     formZ.nama.focus();
                     return false;
                 }
@@ -67,12 +67,12 @@ if (isset($_GET['aksi'])) {
 
         <b>EDIT PELANGGAN</b>	
         <table width="100%"  border="0" cellspacing="0" cellpadding="3">
-            <form name="customer" action="?page=customer_edit&aksi=update" method="post" onsubmit="return chekForm(this)">
+            <form name="pelanggan" action="?page=pelanggan_edit&aksi=update" method="post" onsubmit="return chekForm(this)">
                 <tr>
                     <td width="15%"><div class="tabtxt">ID Customer</div></td>
                     <td width="2%"><div class="tabtxt">:</div></td>
                     <td width="83%">
-                        <input name="id_cust" style="width:100px" type="textfield" class="tfield" value="<?php echo $cust->bacadata('id_cust', $id); ?>" readonly>
+                        <input name="id_pelanggan" style="width:100px" type="textfield" class="tfield" value="<?php echo $cust->bacadata('id_pelanggan', $id); ?>" readonly>
                     </td>
                 </tr>          
                 <tr>
@@ -123,8 +123,8 @@ if (isset($_GET['aksi'])) {
         </table>
         <?php
     } else if ($_GET['aksi'] == 'update') {
-        // update data customer via method
-        $cust->updatecust($_POST['id_cust'], $_POST['nama'], $_POST['alamat'], $_POST['ktp'], $_POST['tmpt_lahir'], tgl_ind_to_eng($_POST['tgl_lahir']), $_POST['telp']);
+        // update data pelanggan via method
+        $cust->updatecust($_POST['id_pelanggan'], $_POST['nama'], $_POST['alamat'], $_POST['ktp'], $_POST['tmpt_lahir'], tgl_ind_to_eng($_POST['tgl_lahir']), $_POST['telp']);
     }
 }
 ?>

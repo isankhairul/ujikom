@@ -3,7 +3,7 @@ include_once 'include/class.php';
 include_once 'include/lib.php';
 
 //$user = new User();
-$cust = new customer();
+$cust = new pelanggan();
 
 $iduser = $_SESSION['id'];
 if (!$user->get_sesi()) {
@@ -16,7 +16,7 @@ if (!$user->get_sesi()) {
         <tr>
             <td><img src="images/tabdata01.gif" /></td>
             <td class="tabsubnav">
-                <b>DATA</b><a href="?page=customer_add">TAMBAH</a>
+                <b>DATA</b><a href="?page=pelanggan_add">TAMBAH</a>
             </td>
             <td><img src="images/tabdata03.gif" /></td>
         </tr>
@@ -25,7 +25,7 @@ if (!$user->get_sesi()) {
 <table class="tabholder"  border="0" cellspacing="0" cellpadding="3">
     <tr class="tabhead">
         <td width="40%">
-            <form method="post" action="?page=customer_mgr" onsubmit="if (this.q.value)
+            <form method="post" action="?page=pelanggan_mgr" onsubmit="if (this.q.value)
                         return true;
                     else
                         return false;">
@@ -34,7 +34,7 @@ if (!$user->get_sesi()) {
             </form>
         </td>
         <td width="60%" align="right">
-            <form method="post" action="?page=customer_mgr" onsubmit="if (this.q.value)
+            <form method="post" action="?page=pelanggan_mgr" onsubmit="if (this.q.value)
                         return true;
                     else
                         return false;">
@@ -56,35 +56,35 @@ if (!$user->get_sesi()) {
         <td align="center" width="70" class="tabtxt">Aksi</td>
     </tr>
     <?php
-//Tampilkan semua customer
-    $arraycustomer = $cust->tampilcust();
+//Tampilkan semua pelanggan
+    $arraypelanggan = $cust->tampilcust();
 
 //tampilkan semua lewat tombol lihat semua
     if ($_POST['do'] == 'lihat') {
-        $arraycustomer = $cust->tampilcust();
+        $arraypelanggan = $cust->tampilcust();
     }
 //tampilkan berdasarkan filter nama
     elseif ($_POST['do'] == 'find') {
-        $arraycustomer = $cust->searchcust($_POST['q']);
+        $arraypelanggan = $cust->searchcust($_POST['q']);
     }
 
-    if (count($arraycustomer)) {
-        foreach ($arraycustomer as $data) {
+    if (count($arraypelanggan)) {
+        foreach ($arraypelanggan as $data) {
             ?>
             <tr class="tabcont">
                 <td class="tabtxt" align="center"><?php echo $c = $c + 1; ?>.</td>
-                <td class="tabtxt" align="center"><?php echo $data['id_cust'] ?></td>
+                <td class="tabtxt" align="center"><?php echo $data['id_pelanggan'] ?></td>
                 <td class="tabtxt" align="center"><?php echo $data['nama']; ?></td>
                 <td class="tabtxt" align="center"><?php echo $data['ktp']; ?></td>
                 <td class="tabtxt" align="center"><?php echo $data['alamat']; ?></td>
                 <td align="left">
                     <div class="tabtxt imghref">
                         <span class="dashnav">&nbsp;</span>
-                        <a href="?page=customer_edit&aksi=edit&id_cust=<?php echo $data['id_cust']; ?>">
+                        <a href="?page=pelanggan_edit&aksi=edit&id_pelanggan=<?php echo $data['id_pelanggan']; ?>">
                             <img src="images/ico_edit.gif" class="ico" border="0" title="Edit" />
                         </a>
                         <span class="dashnav">&nbsp;</span>
-                        <a href="?page=customer_edit&aksi=hapus&id_cust=<?php echo $data['id_cust']; ?>">
+                        <a href="?page=pelanggan_edit&aksi=hapus&id_pelanggan=<?php echo $data['id_pelanggan']; ?>">
                             <img src="images/ico_del.gif" class="ico" border="0" title="Hapus" onClick="return confirm('Apakah Anda Yakin?');"/>
                         </a>
                     </div>
@@ -93,7 +93,7 @@ if (!$user->get_sesi()) {
             <?php
         }
     } else {
-        echo 'Nama customer Tidak Ada!';
+        echo 'Nama pelanggan Tidak Ada!';
     }
     ?>
 </table>
