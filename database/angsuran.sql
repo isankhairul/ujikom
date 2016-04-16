@@ -67,7 +67,7 @@ CREATE TABLE `jadwal` (
 
 LOCK TABLES `jadwal` WRITE;
 /*!40000 ALTER TABLE `jadwal` DISABLE KEYS */;
-INSERT INTO `jadwal` VALUES ('JD0001','CS003','TK001','Service','2016-04-14','B02','ok','22:18','test'),('JD0002','CS005','TK003','Service','2016-04-15','B04','ok','22:18','test');
+INSERT INTO `jadwal` VALUES ('JD0001','CS003','TK001','Service','2016-04-14','B02','ok','22:18','test'),('JD0002','CS005','TK003','Service','2016-04-15','B04','ok','22:18','test'),('JD0003','PL003','TK002','Service','2016-04-15','B02','ok','23:38','test'),('JD0004','PL005','TK003','Service','2016-04-23','B04','belum_proses','23:38','test');
 /*!40000 ALTER TABLE `jadwal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `transaksi` (
 
 LOCK TABLES `transaksi` WRITE;
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
-INSERT INTO `transaksi` VALUES ('TR0001','JD0001',50000,'2016-04-13 23:17:27'),('TR0002','JD0002',100000,'2016-04-13 23:17:55');
+INSERT INTO `transaksi` VALUES ('TR0001','JD0003',500000,'2016-04-14 23:38:43');
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-13 23:59:19
+-- Dump completed on 2016-04-14 23:41:58

@@ -46,11 +46,11 @@ class User {
     }
     
     function getListAccessPage(){
-        return [
-            "admin" => ["teknisi", "pelanggan", "barang", "jadwal", "transaksi"],
-            "manager" => ["teknisi", "pelanggan", "barang", "jadwal", "transaksi"],
-            "teknisi" => ["teknisi"]
-        ];
+        return array(
+            "admin" => array("teknisi", "pelanggan", "barang", "jadwal", "transaksi"),
+            "manager" => array("teknisi", "pelanggan", "barang", "jadwal", "transaksi"),
+            "teknisi" => array("teknisi")
+        );
     }
 
 }
